@@ -31,29 +31,33 @@ class AirportsDatabaseFlightDurationCalculatorService extends SharpApiClient
     }
 
     /**
-     * Search for airports by name, IATA code, ICAO code, or city.
+     * Search for airports by name or city.
      *
-     * @param string $query The search query (airport name, IATA code, ICAO code, or city)
-     * @param int|null $limit Maximum number of results to return
+     * @param string $query The search query (airport name or city)
+     * @param int|null $perPage Maximum number of results per page (max 100)
+     * @param array $filters Optional filters: country, timezone, iata_assigned, icao_assigned, lid_assigned
      * @return array The search results
      *
      * @throws GuzzleException
      *
      * @api
      */
-    public function searchAirports(string $query, ?int $limit = null): array
+    public function searchAirports(string $query, ?int $perPage = null, array $filters = []): array
     {
         $params = [
-            'query' => $query,
+            'name' => $query,
         ];
 
-        if ($limit !== null) {
-            $params['limit'] = $limit;
+        if ($perPage !== null) {
+            $params['per_page'] = min($perPage, 100); // Max 100 per API spec
         }
+
+        // Merge additional filters
+        $params = array_merge($params, $filters);
 
         $response = $this->makeRequest(
             'GET',
-            '/utility/airports/search',
+            '/airports',
             $params
         );
 
@@ -74,7 +78,7 @@ class AirportsDatabaseFlightDurationCalculatorService extends SharpApiClient
     {
         $response = $this->makeRequest(
             'GET',
-            '/utility/airports/iata/' . $iataCode
+            '/airports/iata/' . $iataCode
         );
 
         return json_decode((string) $response->getBody(), true);
@@ -94,7 +98,7 @@ class AirportsDatabaseFlightDurationCalculatorService extends SharpApiClient
     {
         $response = $this->makeRequest(
             'GET',
-            '/utility/airports/icao/' . $icaoCode
+            '/airports/icao/' . $icaoCode
         );
 
         return json_decode((string) $response->getBody(), true);
@@ -128,27 +132,27 @@ class AirportsDatabaseFlightDurationCalculatorService extends SharpApiClient
     /**
      * Get airports by country code.
      *
-     * @param string $countryCode The ISO country code
-     * @param int|null $limit Maximum number of results to return
+     * @param string $countryCode The ISO country code (2 letters)
+     * @param int|null $perPage Number of results per page (max 100)
      * @return array The airports in the specified country
      *
      * @throws GuzzleException
      *
      * @api
      */
-    public function getAirportsByCountry(string $countryCode, ?int $limit = null): array
+    public function getAirportsByCountry(string $countryCode, ?int $perPage = null): array
     {
         $params = [
             'country' => $countryCode,
         ];
 
-        if ($limit !== null) {
-            $params['limit'] = $limit;
+        if ($perPage !== null) {
+            $params['per_page'] = min($perPage, 100);
         }
 
         $response = $this->makeRequest(
             'GET',
-            '/utility/airports/country',
+            '/airports',
             $params
         );
 
