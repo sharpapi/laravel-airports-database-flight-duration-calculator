@@ -55,11 +55,7 @@ class AirportsDatabaseFlightDurationCalculatorService extends SharpApiClient
         // Merge additional filters
         $params = array_merge($params, $filters);
 
-        $response = $this->makeRequest(
-            'GET',
-            '/airports',
-            $params
-        );
+        $response = $this->makeGetRequest('/airports', $params);
 
         return json_decode((string) $response->getBody(), true);
     }
@@ -117,8 +113,7 @@ class AirportsDatabaseFlightDurationCalculatorService extends SharpApiClient
      */
     public function calculateFlightDuration(string $fromIataCode, string $toIataCode): array
     {
-        $response = $this->makeRequest(
-            'GET',
+        $response = $this->makeGetRequest(
             '/utility/flight-duration',
             [
                 'from' => $fromIataCode,
@@ -150,11 +145,7 @@ class AirportsDatabaseFlightDurationCalculatorService extends SharpApiClient
             $params['per_page'] = min($perPage, 100);
         }
 
-        $response = $this->makeRequest(
-            'GET',
-            '/airports',
-            $params
-        );
+        $response = $this->makeGetRequest('/airports', $params);
 
         return json_decode((string) $response->getBody(), true);
     }

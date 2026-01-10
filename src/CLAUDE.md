@@ -7,6 +7,11 @@
 
 | ID | Time | T | Title | Read |
 |----|------|---|-------|------|
+| #315 | 10:10 PM | 🔴 | Fixed GET request in airports database getAirportsByCountry method | ~276 |
+| #314 | " | 🔄 | Refactored calculateFlightDuration to use makeGetRequest method | ~243 |
+| #313 | " | 🔴 | Fixed airports database service to use makeGetRequest for proper parameter handling | ~286 |
+| #312 | 10:09 PM | 🔵 | Reviewed airports service implementation showing GET request parameter usage | ~332 |
+| #301 | 10:00 PM | 🔴 | Committed airports database API endpoint fixes to align with OpenAPI spec | ~383 |
 | #285 | 9:48 PM | 🔴 | Fixed airports database API endpoint and parameter naming | ~299 |
 | #284 | " | 🔴 | Fixed airport ICAO endpoint path removing incorrect /utility prefix | ~297 |
 | #283 | " | 🔴 | Fixed incorrect API endpoint path in getAirportByIataCode method | ~283 |

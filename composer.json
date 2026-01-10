@@ -1,6 +1,6 @@
 {
   "name": "sharpapi/laravel-airports-database-flight-duration-calculator",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Airports Database & Flight Duration Calculator for Laravel powered by SharpAPI.com",
   "keywords": [
     "sharpapi",
