@@ -14,7 +14,7 @@ Check the details at SharpAPI's [Airports Database & Flight Duration Calculator]
 ## Requirements
 
 - PHP >= 8.1
-- Laravel >= 9.0
+- Laravel >= 10.48.29
 
 ---
 
